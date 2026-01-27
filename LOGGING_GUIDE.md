@@ -250,7 +250,7 @@ node build/httpServer.js > server.log 2>&1
 
 ```typescript
 // 示例：添加更详细的参数日志
-console.log(`🚀 [MCP-tools/call] Tool: ${name} | Args: ${JSON.stringify(args)}`);
+console.error(`🚀 [MCP-tools/call] Tool: ${name} | Args: ${JSON.stringify(args)}`);
 ```
 
 ## 🆚 与 stdio 模式的对比

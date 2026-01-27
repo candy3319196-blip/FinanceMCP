@@ -65,7 +65,7 @@ export const companyPerformance = {
     period?: string;
   }) {
     try {
-      console.log('公司综合表现查询参数:', args);
+      console.error('公司综合表现查询参数:', args);
       
       const TUSHARE_API_KEY = TUSHARE_CONFIG.API_TOKEN;
       const TUSHARE_API_URL = TUSHARE_CONFIG.API_URL;
@@ -384,7 +384,7 @@ async function fetchFinancialData(
     // 股权质押明细数据 - 只需要ts_code，不需要日期参数
   }
 
-  console.log(`请求${dataType}数据，API: ${config.api_name}，参数:`, params.params);
+  console.error(`请求${dataType}数据，API: ${config.api_name}，参数:`, params.params);
 
   // 设置请求超时
   const controller = new AbortController();
@@ -438,7 +438,7 @@ async function fetchFinancialData(
         // 转换日期格式进行比较 (YYYYMMDD格式)
         return annDate >= startDate && annDate <= endDate;
       });
-      console.log(`日期范围过滤后剩余${resultData.length}条分红记录`);
+      console.error(`日期范围过滤后剩余${resultData.length}条分红记录`);
     }
 
     // 对pledge_stat数据进行日期范围过滤
@@ -451,10 +451,10 @@ async function fetchFinancialData(
         // 转换日期格式进行比较 (YYYYMMDD格式)
         return endDateItem >= startDate && endDateItem <= endDate;
       });
-      console.log(`日期范围过滤后剩余${resultData.length}条股权质押统计记录`);
+      console.error(`日期范围过滤后剩余${resultData.length}条股权质押统计记录`);
     }
 
-    console.log(`成功获取到${resultData.length}条${dataType}数据记录`);
+    console.error(`成功获取到${resultData.length}条${dataType}数据记录`);
     return { data: resultData, fields: fieldsArray };
 
   } catch (error) {

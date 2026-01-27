@@ -42,7 +42,7 @@ export const moneyFlow = {
     trade_date?: string;
   }) {
     try {
-      console.log('资金流向数据查询参数:', args);
+      console.error('资金流向数据查询参数:', args);
       
       const TUSHARE_API_KEY = TUSHARE_CONFIG.API_TOKEN;
       const TUSHARE_API_URL = TUSHARE_CONFIG.API_URL;
@@ -210,7 +210,7 @@ async function callTushareAPI(params: any, apiUrl: string) {
   const timeoutId = setTimeout(() => controller.abort(), TUSHARE_CONFIG.TIMEOUT);
 
   try {
-    console.log(`请求Tushare API: ${params.api_name}，参数:`, params.params);
+    console.error(`请求Tushare API: ${params.api_name}，参数:`, params.params);
     
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -247,7 +247,7 @@ async function callTushareAPI(params: any, apiUrl: string) {
       return result;
     });
     
-    console.log(`成功获取到${convertedData.length}条资金流向数据记录`);
+    console.error(`成功获取到${convertedData.length}条资金流向数据记录`);
     
     return {
       data: convertedData,

@@ -45,7 +45,7 @@ export const stockData = {
   async run(args: { code: string; market_type: string; start_date?: string; end_date?: string; indicators?: string }) {
     try {
       // 添加调试日志
-      console.log('接收到的参数:', args);
+      console.error('接收到的参数:', args);
       
       // 检查market_type参数
       if (!args.market_type) {
@@ -53,12 +53,12 @@ export const stockData = {
       }
       
       const marketType = args.market_type.trim().toLowerCase();
-      console.log(`使用的市场类型: ${marketType}`);
-      console.log(`使用Tushare API获取${marketType}市场股票${args.code}的行情数据`);
+      console.error(`使用的市场类型: ${marketType}`);
+      console.error(`使用Tushare API获取${marketType}市场股票${args.code}的行情数据`);
       
       // 解析技术指标参数
       const requestedIndicators = args.indicators ? args.indicators.trim().split(/\s+/) : [];
-      console.log('请求的技术指标:', requestedIndicators);
+      console.error('请求的技术指标:', requestedIndicators);
       
       // 使用全局配置中的Tushare API设置
       const TUSHARE_API_KEY = TUSHARE_CONFIG.API_TOKEN;
@@ -83,7 +83,7 @@ export const stockData = {
       if (requestedIndicators.length > 0) {
         const requiredDays = calculateRequiredDays(requestedIndicators);
         actualStartDate = calculateExtendedStartDate(userStartDate, requiredDays);
-        console.log(`技术指标需要${requiredDays}天历史数据，扩展开始日期从 ${userStartDate} 到 ${actualStartDate}`);
+        console.error(`技术指标需要${requiredDays}天历史数据，扩展开始日期从 ${userStartDate} 到 ${actualStartDate}`);
       }
 
       // 验证市场类型
@@ -94,7 +94,7 @@ export const stockData = {
       
       // 加密货币市场（Binance）分支：
       if (marketType === 'crypto') {
-        console.log(`使用 Binance 获取加密资产 ${args.code} 的逐日K线 (OHLCV)`);
+        console.error(`使用 Binance 获取加密资产 ${args.code} 的逐日K线 (OHLCV)`);
 
         // 日期与符号解析
         const toYMD = (d: Date): string => {
@@ -150,7 +150,7 @@ export const stockData = {
         const maxPages = 100; // 安全上限，防止极端情况下的无限循环
         while (startMs < endMs && pageIndex < maxPages) {
           const url = `https://api.binance.com/api/v3/klines?symbol=${encodeURIComponent(symbol)}&interval=1d&startTime=${startMs}&endTime=${endMs}&limit=1000`;
-          console.log(`Binance Klines URL[${pageIndex + 1}]:`, url);
+          console.error(`Binance Klines URL[${pageIndex + 1}]:`, url);
 
           const resp = await fetch(url);
           if (!resp.ok) {
@@ -201,7 +201,7 @@ export const stockData = {
           stockData = stockData.filter(r => r.trade_date >= userStartDate && r.trade_date <= userEndDate);
         }
         stockData.sort((a, b) => b.trade_date.localeCompare(a.trade_date));
-        console.log(`Binance 分页返回 共${allKlines.length} 根K线，过滤后 ${stockData.length} 条记录`);
+        console.error(`Binance 分页返回 共${allKlines.length} 根K线，过滤后 ${stockData.length} 条记录`);
         
         // 计算技术指标
         let indicators: Record<string, any> = {};
@@ -258,7 +258,7 @@ export const stockData = {
           });
           // 过滤到用户指定区间
           stockData = filterDataToUserRange(stockData, userStartDate, userEndDate);
-          console.log(`过滤到用户请求时间范围，剩余${stockData.length}条记录`);
+          console.error(`过滤到用户请求时间范围，剩余${stockData.length}条记录`);
         }
         
         // 表格输出（走默认分支样式）
@@ -447,15 +447,15 @@ export const stockData = {
           break;
       }
       
-      console.log(`选择的API接口: ${params.api_name}`);
-      console.log(`字段设置: 返回所有可用字段`);
+      console.error(`选择的API接口: ${params.api_name}`);
+      console.error(`字段设置: 返回所有可用字段`);
       
       // 设置请求超时
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), TUSHARE_CONFIG.TIMEOUT);
       
       try {
-        console.log(`请求Tushare API: ${params.api_name}，参数:`, params.params);
+        console.error(`请求Tushare API: ${params.api_name}，参数:`, params.params);
         
         // 发送请求
         const response = await fetch(TUSHARE_API_URL, {
@@ -495,7 +495,7 @@ export const stockData = {
           return result;
         });
         
-                console.log(`成功获取到${stockData.length}条${args.code}股票数据记录（扩展数据范围）`);
+                console.error(`成功获取到${stockData.length}条${args.code}股票数据记录（扩展数据范围）`);
         
         // 对A股强制应用前复权（qfq）：使用最新交易日因子进行归一
         if (marketType === 'cn' && stockData.length > 0) {
@@ -553,7 +553,7 @@ export const stockData = {
                 }
                 return row;
               });
-              console.log(`已应用前复权(基于最新交易日因子)到 ${args.code} 的OHLC价格`);
+              console.error(`已应用前复权(基于最新交易日因子)到 ${args.code} 的OHLC价格`);
             } else {
               console.warn('未找到最新交易日复权因子，跳过前复权');
             }
@@ -656,7 +656,7 @@ export const stockData = {
          // 过滤数据到用户请求的时间范围
          if (requestedIndicators.length > 0) {
            stockData = filterDataToUserRange(stockData, userStartDate, userEndDate);
-           console.log(`过滤到用户请求时间范围，剩余${stockData.length}条记录`);
+           console.error(`过滤到用户请求时间范围，剩余${stockData.length}条记录`);
          }
         
         // 生成市场类型标题

@@ -90,6 +90,6 @@ export const COINGECKO_CONFIG = {
 if (process.env.NODE_ENV !== 'production') {
   const fromTs = getRequestToken() ? 'request-header' : (process.env.TUSHARE_TOKEN ? 'env' : 'none');
   const fromCg = getCoinGeckoProApiKey() ? 'request-pro-header/env' : (getCoinGeckoApiKey() ? 'request-std-header/env' : 'none');
-  console.log('Tushare token source:', fromTs);
-  console.log('CoinGecko key source:', fromCg);
+  console.error('Tushare token source:', fromTs);
+  console.error('CoinGecko key source:', fromCg);
 }

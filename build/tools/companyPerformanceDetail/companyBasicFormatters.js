@@ -9,7 +9,7 @@ export function formatCompanyBasic(data) {
     if (!data || data.length === 0) {
         return "未找到上市公司基本信息。";
     }
-    console.log(`开始格式化${data.length}条公司基本信息记录`);
+    console.error(`开始格式化${data.length}条公司基本信息记录`);
     let result = `## 🏢 上市公司基本信息\n\n`;
     // 基础信息表格展示
     result += `### 公司基础信息\n\n`;

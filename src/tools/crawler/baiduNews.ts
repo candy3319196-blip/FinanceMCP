@@ -5,7 +5,7 @@ export async function searchBaiduNews(keywords: string[]): Promise<NewsItem[]> {
   try {
     // 将所有关键词用空格连接，支持多关键词搜索
     const searchQuery = keywords.join(' ');
-    console.log(`正在搜索百度新闻关键词: ${searchQuery}`);
+    console.error(`正在搜索百度新闻关键词: ${searchQuery}`);
     
     // 百度新闻搜索URL，使用word参数传递搜索关键词
     const encodedQuery = encodeURIComponent(searchQuery);
@@ -35,12 +35,12 @@ export async function searchBaiduNews(keywords: string[]): Promise<NewsItem[]> {
     }
     
     const html = await response.text();
-    console.log(`百度新闻页面HTML长度: ${html.length}`);
+    console.error(`百度新闻页面HTML长度: ${html.length}`);
     
     // 解析百度新闻页面内容
     const newsItems = parseBaiduNews(html, searchQuery);
     
-    console.log(`百度新闻解析完成，共获得 ${newsItems.length} 条新闻`);
+    console.error(`百度新闻解析完成，共获得 ${newsItems.length} 条新闻`);
     return newsItems;
     
   } catch (error) {
@@ -63,7 +63,7 @@ function parseBaiduNews(html: string, searchQuery: string): NewsItem[] {
     const blockMatches = html.match(newsBlockRegex);
 
     if (blockMatches) {
-        console.log(`找到 ${blockMatches.length} 个新闻区块`);
+        console.error(`找到 ${blockMatches.length} 个新闻区块`);
         for (const blockHtml of blockMatches) {
             const newsItem = extractNewsFromBaiduItem(blockHtml, searchQuery);
             if (newsItem && newsItems.length < 15) {
@@ -77,7 +77,7 @@ function parseBaiduNews(html: string, searchQuery: string): NewsItem[] {
 
     // 如果主策略未找到任何新闻，则启用备用策略
     if (newsItems.length === 0) {
-        console.log("主策略未找到新闻，启用备用策略...");
+        console.error("主策略未找到新闻，启用备用策略...");
         // 备用策略: 查找包含新闻标题的h3标签 (旧方法)
         const titleRegex = /<h3[^>]*class="[^"]*t"[^>]*><a[^>]*href="([^"]*)"[^>]*>([^<]*(?:<[^>]*>[^<]*)*)<\/a><\/h3>/g;
         let titleMatch;

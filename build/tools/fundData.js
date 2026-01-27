@@ -31,7 +31,7 @@ export const fundData = {
     },
     async run(args) {
         try {
-            console.log('基金数据查询参数:', args);
+            console.error('基金数据查询参数:', args);
             const TUSHARE_API_KEY = TUSHARE_CONFIG.API_TOKEN;
             const TUSHARE_API_URL = TUSHARE_CONFIG.API_URL;
             if (!TUSHARE_API_KEY) {
@@ -169,7 +169,7 @@ async function fetchFundData(dataType, tsCode, period, startDate, endDate, apiKe
                 params.params.end_date = endDate;
         }
     }
-    console.log(`调用${config.api_name} API，参数:`, JSON.stringify(params, null, 2));
+    console.error(`调用${config.api_name} API，参数:`, JSON.stringify(params, null, 2));
     // 设置请求超时
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), TUSHARE_CONFIG.TIMEOUT);
@@ -210,9 +210,9 @@ async function fetchFundData(dataType, tsCode, period, startDate, endDate, apiKe
                     return true;
                 return annDate >= startDate && annDate <= endDate;
             });
-            console.log(`日期范围过滤后剩余${filteredData.length}条${dataType}记录`);
+            console.error(`日期范围过滤后剩余${filteredData.length}条${dataType}记录`);
         }
-        console.log(`成功获取到${filteredData.length}条${dataType}数据记录`);
+        console.error(`成功获取到${filteredData.length}条${dataType}数据记录`);
         // 如果是净值数据且有基金代码，尝试获取基金份额数据并合并
         if (dataType === 'nav' && tsCode && filteredData.length > 0) {
             try {
@@ -228,7 +228,7 @@ async function fetchFundData(dataType, tsCode, period, startDate, endDate, apiKe
                         const tradeDate = navItem.nav_date || navItem.ann_date;
                         navItem.fd_share = shareMap.get(tradeDate) || null;
                     });
-                    console.log(`成功合并${shareResult.data.length}条基金份额数据`);
+                    console.error(`成功合并${shareResult.data.length}条基金份额数据`);
                 }
             }
             catch (error) {
@@ -265,7 +265,7 @@ async function fetchFundShareData(tsCode, startDate, endDate, period, apiKey, ap
         if (endDate)
             params.params.end_date = endDate;
     }
-    console.log(`调用fund_share API，参数:`, JSON.stringify(params, null, 2));
+    console.error(`调用fund_share API，参数:`, JSON.stringify(params, null, 2));
     // 设置请求超时
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), TUSHARE_CONFIG.TIMEOUT);

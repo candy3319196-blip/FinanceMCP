@@ -37,7 +37,7 @@ export const marginTrade = {
     exchange?: string;
   }) {
     try {
-      console.log('融资融券数据查询参数:', args);
+      console.error('融资融券数据查询参数:', args);
       
       const TUSHARE_API_KEY = TUSHARE_CONFIG.API_TOKEN;
       const TUSHARE_API_URL = TUSHARE_CONFIG.API_URL;
@@ -187,7 +187,7 @@ async function fetchSlbLenMm(
 
 // 通用API调用函数
 async function callTushareAPI(params: any, apiUrl: string, apiName: string) {
-  console.log(`请求${apiName}数据，参数:`, params.params);
+  console.error(`请求${apiName}数据，参数:`, params.params);
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), TUSHARE_CONFIG.TIMEOUT);
@@ -227,7 +227,7 @@ async function callTushareAPI(params: any, apiUrl: string, apiName: string) {
       return result;
     });
 
-    console.log(`成功获取到${resultData.length}条${apiName}数据记录`);
+    console.error(`成功获取到${resultData.length}条${apiName}数据记录`);
     return resultData;
 
   } catch (error) {

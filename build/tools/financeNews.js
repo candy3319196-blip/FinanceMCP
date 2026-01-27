@@ -19,7 +19,7 @@ export const financeNews = {
                 throw new Error("搜索关键词不能为空");
             }
             const query = args.query.trim();
-            console.log(`开始搜索财经新闻，关键词: ${query}，使用有效的新闻接口`);
+            console.error(`开始搜索财经新闻，关键词: ${query}，使用有效的新闻接口`);
             const newsResults = await searchFinanceNews(query);
             if (newsResults.length === 0) {
                 return {
@@ -31,7 +31,7 @@ export const financeNews = {
                     ]
                 };
             }
-            console.log(`搜索完成，共找到 ${newsResults.length} 条新闻`);
+            console.error(`搜索完成，共找到 ${newsResults.length} 条新闻`);
             // 简化返回格式，参考stock_data的格式
             const formattedNews = newsResults.map((news) => {
                 return `${news.title}\n来源: ${news.source}  时间: ${news.publishTime}\n摘要: ${news.summary}${news.url ? `\n链接: ${news.url}` : ''}\n`;
@@ -71,7 +71,7 @@ async function searchFinanceNews(query) {
             const sourceNames = ['百度新闻'];
             if (result.status === 'fulfilled') {
                 news.push(...result.value);
-                console.log(`${sourceNames[index]} 搜索成功，获得 ${result.value.length} 条新闻`);
+                console.error(`${sourceNames[index]} 搜索成功，获得 ${result.value.length} 条新闻`);
             }
             else {
                 console.error(`${sourceNames[index]} 搜索失败:`, result.reason);

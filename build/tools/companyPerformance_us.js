@@ -35,7 +35,7 @@ export const companyPerformance_us = {
     },
     async run(args) {
         try {
-            console.log('美股公司综合表现查询参数:', args);
+            console.error('美股公司综合表现查询参数:', args);
             const TUSHARE_API_KEY = TUSHARE_CONFIG.API_TOKEN;
             const TUSHARE_API_URL = TUSHARE_CONFIG.API_URL;
             if (!TUSHARE_API_KEY) {

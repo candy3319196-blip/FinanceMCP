@@ -216,9 +216,9 @@ app.all("/mcp", async (req: Request, res: Response) => {
 
 // 启动（Streamable HTTP 模式）
 app.listen(PORT, () => {
-  console.log(`Streamable HTTP MCP Server http://localhost:${PORT}`);
-  console.log(`MCP endpoint: http://localhost:${PORT}/mcp`);
-  console.log(`Health: http://localhost:${PORT}/health`);
+  console.error(`Streamable HTTP MCP Server http://localhost:${PORT}`);
+  console.error(`MCP endpoint: http://localhost:${PORT}/mcp`);
+  console.error(`Health: http://localhost:${PORT}/health`);
 });
 ```
 

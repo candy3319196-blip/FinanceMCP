@@ -22,7 +22,7 @@ export const macroEcon = {
     },
     async run(args) {
         try {
-            console.log(`使用Tushare API获取${args.indicator}宏观经济数据`);
+            console.error(`使用Tushare API获取${args.indicator}宏观经济数据`);
             // 使用全局配置中的Tushare API设置
             const TUSHARE_API_KEY = TUSHARE_CONFIG.API_TOKEN;
             const TUSHARE_API_URL = TUSHARE_CONFIG.API_URL;
@@ -192,7 +192,7 @@ export const macroEcon = {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), TUSHARE_CONFIG.TIMEOUT);
             try {
-                console.log(`请求Tushare API: ${params.api_name}，参数:`, params.params);
+                console.error(`请求Tushare API: ${params.api_name}，参数:`, params.params);
                 // 发送请求
                 const response = await fetch(TUSHARE_API_URL, {
                     method: "POST",

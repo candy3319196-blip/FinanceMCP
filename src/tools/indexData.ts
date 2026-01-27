@@ -23,7 +23,7 @@ export const indexData = {
   },
   async run(args: { code: string; start_date?: string; end_date?: string }) {
     try {
-      console.log(`使用Tushare API获取指数${args.code}的数据`);
+      console.error(`使用Tushare API获取指数${args.code}的数据`);
       
       // 使用全局配置中的Tushare API设置
       const TUSHARE_API_KEY = TUSHARE_CONFIG.API_TOKEN;
@@ -54,7 +54,7 @@ export const indexData = {
       const timeoutId = setTimeout(() => controller.abort(), TUSHARE_CONFIG.TIMEOUT);
       
       try {
-        console.log(`请求Tushare API: ${params.api_name}，参数:`, params.params);
+        console.error(`请求Tushare API: ${params.api_name}，参数:`, params.params);
         
         // 发送请求
         const response = await fetch(TUSHARE_API_URL, {

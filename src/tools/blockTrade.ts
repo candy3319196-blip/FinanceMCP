@@ -24,7 +24,7 @@ export const blockTrade = {
   },
   async run(args: { code?: string; start_date: string; end_date: string }) {
     try {
-      console.log('大宗交易查询参数:', args);
+      console.error('大宗交易查询参数:', args);
       
       const TUSHARE_API_KEY = TUSHARE_CONFIG.API_TOKEN;
       const TUSHARE_API_URL = TUSHARE_CONFIG.API_URL;
@@ -51,7 +51,7 @@ export const blockTrade = {
         // 不设置fields参数，返回所有字段
       };
 
-      console.log(`请求大宗交易数据，API: block_trade，参数:`, params.params);
+      console.error(`请求大宗交易数据，API: block_trade，参数:`, params.params);
 
       // 设置请求超时
       const controller = new AbortController();
@@ -100,7 +100,7 @@ export const blockTrade = {
           return result;
         });
 
-        console.log(`成功获取到${tradeData.length}条大宗交易记录`);
+        console.error(`成功获取到${tradeData.length}条大宗交易记录`);
 
         // 格式化输出
         const formattedOutput = await formatBlockTradeData(tradeData, args.code || '全市场', args.start_date, args.end_date);

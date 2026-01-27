@@ -34,7 +34,7 @@ export const moneyFlow = {
     },
     async run(args) {
         try {
-            console.log('资金流向数据查询参数:', args);
+            console.error('资金流向数据查询参数:', args);
             const TUSHARE_API_KEY = TUSHARE_CONFIG.API_TOKEN;
             const TUSHARE_API_URL = TUSHARE_CONFIG.API_URL;
             if (!TUSHARE_API_KEY) {
@@ -147,7 +147,7 @@ async function callTushareAPI(params, apiUrl) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), TUSHARE_CONFIG.TIMEOUT);
     try {
-        console.log(`请求Tushare API: ${params.api_name}，参数:`, params.params);
+        console.error(`请求Tushare API: ${params.api_name}，参数:`, params.params);
         const response = await fetch(apiUrl, {
             method: "POST",
             headers: {
@@ -176,7 +176,7 @@ async function callTushareAPI(params, apiUrl) {
             });
             return result;
         });
-        console.log(`成功获取到${convertedData.length}条资金流向数据记录`);
+        console.error(`成功获取到${convertedData.length}条资金流向数据记录`);
         return {
             data: convertedData,
             fields: fields
